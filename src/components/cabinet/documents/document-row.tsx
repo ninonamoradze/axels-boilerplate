@@ -22,19 +22,20 @@ export function DocumentRow({ name, date, type, downloadUrl }: DocumentRowProps)
           </p>
         </div>
       </div>
-      {downloadUrl && (
-        <a
-          href={downloadUrl}
-          download
-          className={cn(
-            "flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs text-white/60",
-            "transition-colors hover:bg-white/5 hover:text-white",
-          )}
-        >
-          <Download size={14} />
-          <span>ჩამოტვირთვა</span>
-        </a>
-      )}
+      <a
+        href={downloadUrl ?? "#"}
+        download={name}
+        aria-disabled={!downloadUrl}
+        className={cn(
+          "flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs transition-colors",
+          downloadUrl
+            ? "text-white/60 hover:bg-white/5 hover:text-white"
+            : "cursor-not-allowed text-white/20",
+        )}
+      >
+        <Download size={14} />
+        <span>ჩამოტვირთვა</span>
+      </a>
     </div>
   );
 }
