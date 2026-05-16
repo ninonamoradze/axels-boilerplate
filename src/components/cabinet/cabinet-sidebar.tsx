@@ -1,4 +1,6 @@
-import { LayoutDashboard, Building2, FileText, CreditCard, User } from "lucide-react";
+"use client";
+
+import { LayoutDashboard, Building2, FileText, CreditCard, User, Newspaper } from "lucide-react";
 import { CabinetNavItem } from "./cabinet-nav-item";
 
 const navItems = [
@@ -6,6 +8,7 @@ const navItems = [
   { href: "/cabinet/property", label: "ჩემი ბინა", icon: Building2 },
   { href: "/cabinet/documents", label: "დოკუმენტები", icon: FileText },
   { href: "/cabinet/payments", label: "გადახდები", icon: CreditCard },
+  { href: "/cabinet/news", label: "სიახლეები", icon: Newspaper },
   { href: "/cabinet/profile", label: "პროფილი", icon: User },
 ];
 
