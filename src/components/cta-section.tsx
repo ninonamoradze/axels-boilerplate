@@ -69,7 +69,7 @@ export function CtaSection() {
             color: "rgba(0, 0, 0, 0.7)",
           }}
         >
-          © {new Date().getFullYear()} YourSaaS
+          © {new Date().getFullYear()} შენი სახლი
         </p>
         <div className="mt-2 flex justify-center gap-4">
           <a

@@ -21,27 +21,27 @@ const datatype = localFont({
 
 export const metadata: Metadata = {
   title: {
-    default: "Axel's Boilerplate — Your tagline here",
-    template: "%s | Axel's Boilerplate",
+    default: "შენი სახლი უნივერსიტეტის ქუჩაზე — Your tagline here",
+    template: "%s | შენი სახლი უნივერსიტეტის ქუჩაზე",
   },
   description:
-    "Animated SaaS landing page boilerplate. Replace this description with your own product copy — what you build, who it's for, why it matters.",
-  keywords: ["axel", "boilerplate", "saas", "landing"],
-  authors: [{ name: "Axel" }],
-  creator: "Axel",
+    "არსის უძრავი ქონების პროექტი — შენი სახლი უნივერსიტეტის ქუჩაზე. კლიენტის პირადი კაბინეტი.",
+  keywords: ["შენი სახლი", "უნივერსიტეტის ქუჩა", "არსი", "უძრავი ქონება"],
+  authors: [{ name: "არსი" }],
+  creator: "არსი",
   metadataBase: new URL("https://yourdomain.com"),
   openGraph: {
     type: "website",
     locale: "en_US",
     url: "https://yourdomain.com",
-    siteName: "Axel's Boilerplate",
-    title: "Axel's Boilerplate — Your tagline here",
-    description: "Animated SaaS landing page boilerplate.",
+    siteName: "შენი სახლი უნივერსიტეტის ქუჩაზე",
+    title: "შენი სახლი უნივერსიტეტის ქუჩაზე — Your tagline here",
+    description: "არსის უძრავი ქონების პროექტი — შენი სახლი უნივერსიტეტის ქუჩაზე.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Axel's Boilerplate — Your tagline here",
-    description: "Animated SaaS landing page boilerplate.",
+    title: "შენი სახლი უნივერსიტეტის ქუჩაზე — Your tagline here",
+    description: "არსის უძრავი ქონების პროექტი — შენი სახლი უნივერსიტეტის ქუჩაზე.",
   },
   robots: {
     index: true,
