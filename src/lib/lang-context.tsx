@@ -32,7 +32,7 @@ export function useLang() {
 export const translations = {
   ka: {
     portalLabel: "მაცხოვრებელთა პორტალი",
-    projectName: "შენი სახლი",
+    projectName: "შენი სახლი უნივერსიტეტის ქუჩაზე",
     logout: "გასვლა",
     loginTitle: "კაბინეტში შესვლა",
     loginSub: "შეიყვანეთ თქვენი მეილი ან ტელეფონი",
@@ -74,7 +74,7 @@ export const translations = {
   },
   en: {
     portalLabel: "Resident Portal",
-    projectName: "Your Home",
+    projectName: "Sheni Saxli Universitetis Quchaze",
     logout: "Sign out",
     loginTitle: "Welcome back",
     loginSub: "Sign in to your Arci client portal",

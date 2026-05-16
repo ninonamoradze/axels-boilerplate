@@ -72,7 +72,7 @@ export function Comparison() {
                 }}
               />
               <span className="text-base font-semibold text-slate-900 md:text-xl">
-                YourSaaS
+                შენი სახლი
               </span>
             </div>
 
