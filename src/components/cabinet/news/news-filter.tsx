@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 import { staggerContainer, staggerItem, defaultViewport } from "@/lib/motion";
 import { NewsCard, type NewsCategory } from "./news-card";
@@ -9,9 +8,9 @@ import { NewsCard, type NewsCategory } from "./news-card";
 type Filter = "all" | NewsCategory;
 
 const filters: { id: Filter; label: string }[] = [
-  { id: "all", label: "ყველა" },
+  { id: "all",   label: "ყველა" },
   { id: "offer", label: "შეთავაზებები" },
-  { id: "news", label: "სიახლეები" },
+  { id: "news",  label: "სიახლეები" },
   { id: "event", label: "ღონისძიებები" },
 ];
 
@@ -32,22 +31,21 @@ interface NewsFilterProps {
 
 export function NewsFilter({ items }: NewsFilterProps) {
   const [active, setActive] = useState<Filter>("all");
-
   const filtered = active === "all" ? items : items.filter((i) => i.category === active);
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-5">
       <div className="flex flex-wrap gap-2">
         {filters.map((f) => (
           <button
             key={f.id}
             onClick={() => setActive(f.id)}
-            className={cn(
-              "rounded-full px-4 py-1.5 text-sm transition-colors",
-              active === f.id
-                ? "bg-white/15 text-white"
-                : "text-white/40 hover:bg-white/5 hover:text-white/70",
-            )}
+            className="rounded-full px-4 py-1.5 text-sm font-medium transition-colors"
+            style={{
+              backgroundColor: active === f.id ? "#1a3d2b" : "#ffffff",
+              color: active === f.id ? "#ffffff" : "#6b8f78",
+              border: "1px solid #d4e8da",
+            }}
           >
             {f.label}
           </button>

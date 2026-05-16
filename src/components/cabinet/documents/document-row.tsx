@@ -1,5 +1,4 @@
 import { Download, FileText } from "lucide-react";
-import { cn } from "@/lib/utils";
 
 interface DocumentRowProps {
   name: string;
@@ -10,14 +9,20 @@ interface DocumentRowProps {
 
 export function DocumentRow({ name, date, type, downloadUrl }: DocumentRowProps) {
   return (
-    <div className="flex items-center justify-between rounded-xl border border-white/10 bg-white/5 px-4 py-3">
+    <div
+      className="flex items-center justify-between rounded-xl px-4 py-3"
+      style={{ backgroundColor: "#ffffff", border: "1px solid #d4e8da" }}
+    >
       <div className="flex items-center gap-3">
-        <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-white/5">
-          <FileText size={18} className="text-white/50" />
+        <div
+          className="flex h-9 w-9 items-center justify-center rounded-lg"
+          style={{ backgroundColor: "#e8f5ee" }}
+        >
+          <FileText size={18} style={{ color: "#2d6a4f" }} />
         </div>
         <div>
-          <p className="text-sm text-white">{name}</p>
-          <p className="mt-0.5 text-xs text-white/40">
+          <p className="text-sm font-medium" style={{ color: "#1a3d2b" }}>{name}</p>
+          <p className="mt-0.5 text-xs" style={{ color: "#9ab8a5" }}>
             {type} · {date}
           </p>
         </div>
@@ -26,12 +31,12 @@ export function DocumentRow({ name, date, type, downloadUrl }: DocumentRowProps)
         href={downloadUrl ?? "#"}
         download={name}
         aria-disabled={!downloadUrl}
-        className={cn(
-          "flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs transition-colors",
-          downloadUrl
-            ? "text-white/60 hover:bg-white/5 hover:text-white"
-            : "cursor-not-allowed text-white/20",
-        )}
+        className="flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-medium transition-colors"
+        style={{
+          color: downloadUrl ? "#2d6a4f" : "#c8ddd0",
+          border: "1px solid #d4e8da",
+          cursor: downloadUrl ? "pointer" : "not-allowed",
+        }}
       >
         <Download size={14} />
         <span>ჩამოტვირთვა</span>

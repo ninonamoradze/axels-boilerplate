@@ -13,34 +13,46 @@ interface PropertyCardProps {
 }
 
 export function PropertyCard({ number, floor, area, rooms, block, status }: PropertyCardProps) {
+  const infoItems = [
+    { label: "სართული", value: floor },
+    { label: "ფართობი", value: `${area} მ²` },
+    { label: "ოთახები", value: rooms },
+    { label: "ბლოკი", value: block },
+  ];
+
   return (
     <motion.div
       variants={fadeUp}
       initial="hidden"
       animate="visible"
       viewport={defaultViewport}
-      className="rounded-2xl border border-white/10 bg-white/5 p-6"
+      style={{ backgroundColor: "#ffffff", borderRadius: 16, border: "1px solid #d4e8da", overflow: "hidden" }}
     >
-      <div className="flex items-start justify-between">
-        <div>
-          <p className="text-sm text-white/50">ბინა</p>
-          <h3 className="mt-1 text-3xl font-medium text-white">№{number}</h3>
+      <div style={{ backgroundColor: "#1a3d2b", padding: "20px 24px" }}>
+        <p style={{ fontSize: 11, color: "#a8d5b5", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 4 }}>
+          შეძენილი ქონება
+        </p>
+        <div className="flex items-center justify-between">
+          <h3 style={{ fontSize: 28, fontWeight: 700, color: "#ffffff" }}>№{number}</h3>
+          <span
+            className="rounded-full px-3 py-1 text-xs font-semibold"
+            style={{ backgroundColor: "#e8f5ee", color: "#1a3d2b" }}
+          >
+            {status}
+          </span>
         </div>
-        <span className="rounded-full bg-indigo-500/20 px-3 py-1 text-xs text-indigo-300">
-          {status}
-        </span>
       </div>
 
-      <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-4">
-        {[
-          { label: "სართული", value: floor },
-          { label: "ფართობი", value: `${area} მ²` },
-          { label: "ოთახები", value: rooms },
-          { label: "ბლოკი", value: block },
-        ].map(({ label, value }) => (
-          <div key={label} className="rounded-xl border border-white/10 bg-white/5 p-4">
-            <p className="text-xs text-white/40">{label}</p>
-            <p className="mt-1 text-lg font-medium text-white">{value}</p>
+      <div
+        className="grid grid-cols-2 sm:grid-cols-4"
+        style={{ gap: "1px", backgroundColor: "#d4e8da" }}
+      >
+        {infoItems.map(({ label, value }) => (
+          <div key={label} style={{ backgroundColor: "#ffffff", padding: "20px 24px" }}>
+            <p style={{ fontSize: 10, color: "#9ab8a5", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 8 }}>
+              {label}
+            </p>
+            <p style={{ fontSize: 20, fontWeight: 700, color: "#1a3d2b" }}>{value}</p>
           </div>
         ))}
       </div>

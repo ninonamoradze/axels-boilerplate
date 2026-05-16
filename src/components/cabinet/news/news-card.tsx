@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import { staggerItem } from "@/lib/motion";
-import { cn } from "@/lib/utils";
 import { Tag, Calendar, Download } from "lucide-react";
 
 export type NewsCategory = "offer" | "news" | "event";
@@ -17,44 +16,42 @@ interface NewsCardProps {
   downloadLabel?: string;
 }
 
-const categoryConfig: Record<NewsCategory, { label: string; styles: string }> = {
-  offer: {
-    label: "სპეციალური შეთავაზება",
-    styles: "bg-amber-500/15 text-amber-300",
-  },
-  news: {
-    label: "სიახლე",
-    styles: "bg-indigo-500/15 text-indigo-300",
-  },
-  event: {
-    label: "ღონისძიება",
-    styles: "bg-emerald-500/15 text-emerald-300",
-  },
+const categoryConfig: Record<NewsCategory, { label: string; bg: string; color: string }> = {
+  offer: { label: "სპეციალური შეთავაზება", bg: "#fff8e1", color: "#b45309" },
+  news:  { label: "სიახლე",                bg: "#e8f5ee", color: "#1a3d2b" },
+  event: { label: "ღონისძიება",             bg: "#eff6ff", color: "#1d4ed8" },
 };
 
 export function NewsCard({ title, description, date, category, isNew, downloadUrl, downloadLabel }: NewsCardProps) {
-  const { label, styles } = categoryConfig[category];
+  const { label, bg, color } = categoryConfig[category];
 
   return (
     <motion.div
       variants={staggerItem}
-      className="group relative rounded-2xl border border-white/10 bg-white/5 p-5 transition-colors hover:bg-white/[0.08]"
+      className="relative flex flex-col rounded-2xl p-5 transition-shadow hover:shadow-md"
+      style={{ backgroundColor: "#ffffff", border: "1px solid #d4e8da" }}
     >
       {isNew && (
-        <span className="absolute top-4 right-4 rounded-full bg-indigo-500 px-2 py-0.5 text-[10px] font-medium text-white">
+        <span
+          className="absolute right-4 top-4 rounded-full px-2 py-0.5 text-[10px] font-semibold"
+          style={{ backgroundColor: "#1a3d2b", color: "#ffffff" }}
+        >
           ახალი
         </span>
       )}
-      <div className="flex items-center gap-2">
-        <span className={cn("flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs", styles)}>
+      <div className="mb-3 flex items-center gap-1.5">
+        <span
+          className="flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-medium"
+          style={{ backgroundColor: bg, color }}
+        >
           <Tag size={11} />
           {label}
         </span>
       </div>
-      <h3 className="mt-3 text-sm font-medium text-white">{title}</h3>
-      <p className="mt-1.5 text-sm leading-relaxed text-white/50">{description}</p>
+      <h3 className="mb-2 text-sm font-semibold" style={{ color: "#1a3d2b" }}>{title}</h3>
+      <p className="flex-1 text-sm leading-relaxed" style={{ color: "#6b8f78" }}>{description}</p>
       <div className="mt-4 flex items-center justify-between">
-        <div className="flex items-center gap-1.5 text-xs text-white/30">
+        <div className="flex items-center gap-1.5 text-xs" style={{ color: "#9ab8a5" }}>
           <Calendar size={12} />
           <span>{date}</span>
         </div>
@@ -62,7 +59,8 @@ export function NewsCard({ title, description, date, category, isNew, downloadUr
           <a
             href={downloadUrl}
             download
-            className="flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs text-white/50 transition-colors hover:bg-white/5 hover:text-white"
+            className="flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-medium transition-colors"
+            style={{ color: "#2d6a4f", border: "1px solid #d4e8da" }}
           >
             <Download size={13} />
             <span>{downloadLabel ?? "ჩამოტვირთვა"}</span>

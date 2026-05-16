@@ -23,9 +23,14 @@ const documents = [
 
 export default function DocumentsPage() {
   return (
-    <div className="flex flex-col gap-6">
-      <h1 className="text-xl font-medium text-white">დოკუმენტები</h1>
-      <div className="flex flex-col gap-3">
+    <div className="flex flex-col gap-4">
+      <div>
+        <h1 className="text-xl font-bold" style={{ color: "#1a3d2b" }}>დოკუმენტები</h1>
+        <p className="mt-1 text-sm" style={{ color: "#6b8f78" }}>
+          ჩამოტვირთეთ თქვენი დოკუმენტები
+        </p>
+      </div>
+      <div className="flex flex-col gap-2">
         {documents.map((doc) => (
           <DocumentRow key={doc.name} {...doc} />
         ))}
