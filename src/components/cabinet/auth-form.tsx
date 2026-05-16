@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { cn } from "@/lib/utils";
+import { useLang, translations } from "@/lib/lang-context";
 
 interface AuthFormProps {
   onLogin: (identifier: string, password: string) => { success: boolean; error?: string };
@@ -10,11 +10,12 @@ interface AuthFormProps {
 }
 
 type Tab = "login" | "register";
-type InputType = "email" | "phone";
 
 export function AuthForm({ onLogin, onRegister }: AuthFormProps) {
+  const { lang, setLang } = useLang();
+  const tr = translations[lang];
+
   const [tab, setTab] = useState<Tab>("login");
-  const [inputType, setInputType] = useState<InputType>("email");
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -24,22 +25,13 @@ export function AuthForm({ onLogin, onRegister }: AuthFormProps) {
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError("");
-
-    if (tab === "register") {
-      if (password !== confirmPassword) {
-        setError("პაროლები არ ემთხვევა");
-        return;
-      }
+    if (tab === "register" && password !== confirmPassword) {
+      setError(lang === "ka" ? "პაროლები არ ემთხვევა" : "Passwords do not match");
+      return;
     }
-
     setSubmitting(true);
-    const result = tab === "login"
-      ? onLogin(identifier, password)
-      : onRegister(identifier, password);
-
-    if (!result.success) {
-      setError(result.error ?? "შეცდომა");
-    }
+    const result = tab === "login" ? onLogin(identifier, password) : onRegister(identifier, password);
+    if (!result.success) setError(result.error ?? "Error");
     setSubmitting(false);
   }
 
@@ -51,76 +43,135 @@ export function AuthForm({ onLogin, onRegister }: AuthFormProps) {
     setConfirmPassword("");
   }
 
-  const inputPlaceholder = inputType === "email" ? "demo@arsi.ge" : "599XXXXXX";
-  const inputMode = inputType === "phone" ? "tel" : "email";
+  const inputStyle = (hasError?: boolean): React.CSSProperties => ({
+    width: "100%",
+    padding: "12px 14px",
+    border: hasError ? "1.5px solid #e05252" : "1.5px solid #c8ddd0",
+    borderRadius: 8,
+    fontSize: 14,
+    color: "#1a3d2b",
+    backgroundColor: "#f8fbf9",
+    outline: "none",
+    boxSizing: "border-box",
+    fontFamily: "Inter, system-ui, sans-serif",
+  });
 
   return (
-    <div className="mx-auto w-full max-w-md">
-      <div className="rounded-3xl border border-slate-100 bg-white p-8 shadow-xl shadow-slate-200/60">
-        <h1 className="mb-1 text-2xl font-bold text-slate-900">პირადი კაბინეტი</h1>
-        <p className="mb-6 text-sm text-slate-500">არსი — თქვენი უძრავი ქონება</p>
+    <div style={{ width: "100%", maxWidth: 400 }}>
+      {/* Header bar */}
+      <div
+        className="mb-6 flex items-center justify-between rounded-xl px-4 py-3"
+        style={{ backgroundColor: "#1a3d2b" }}
+      >
+        <div className="flex items-center gap-2">
+          <div className="flex h-7 w-7 items-center justify-center rounded-lg" style={{ backgroundColor: "#2d6a4f" }}>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#a8d5b5" strokeWidth="2">
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+              <polyline points="9 22 9 12 15 12 15 22" />
+            </svg>
+          </div>
+          <span className="text-xs font-semibold uppercase tracking-widest" style={{ color: "#a8d5b5" }}>
+            {tr.portalLabel}
+          </span>
+        </div>
+        <div className="flex overflow-hidden rounded" style={{ border: "1px solid #2d6a4f" }}>
+          {(["ka", "en"] as const).map((l) => (
+            <button
+              key={l}
+              onClick={() => setLang(l)}
+              className="px-2.5 py-1 text-xs font-bold uppercase transition-colors"
+              style={{
+                backgroundColor: lang === l ? "#2d6a4f" : "transparent",
+                color: lang === l ? "#ffffff" : "#a8d5b5",
+              }}
+            >
+              {l}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Card */}
+      <div
+        style={{
+          backgroundColor: "#ffffff",
+          borderRadius: 16,
+          padding: "40px 36px",
+          boxShadow: "0 4px 24px rgba(26,61,43,0.10)",
+          border: "1px solid #d4e8da",
+        }}
+      >
+        {/* Icon + title */}
+        <div className="mb-6 text-center">
+          <div
+            className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl"
+            style={{ backgroundColor: "#e8f5ee" }}
+          >
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#1a3d2b" strokeWidth="1.8">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+              <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+            </svg>
+          </div>
+          <h1 style={{ fontSize: 20, fontWeight: 700, color: "#1a3d2b", marginBottom: 6 }}>
+            {tr.loginTitle}
+          </h1>
+          <p style={{ fontSize: 13, color: "#6b8f78" }}>{tr.loginSub}</p>
+        </div>
 
         {/* Tabs */}
-        <div className="mb-6 flex rounded-xl bg-slate-100 p-1">
+        <div
+          className="mb-5 flex rounded-lg p-1"
+          style={{ backgroundColor: "#f4f7f4" }}
+        >
           {(["login", "register"] as Tab[]).map((t) => (
             <button
               key={t}
               onClick={() => switchTab(t)}
-              className={cn(
-                "flex-1 rounded-lg py-2 text-sm font-medium transition-all duration-200",
-                tab === t
-                  ? "bg-white text-slate-900 shadow-sm"
-                  : "text-slate-500 hover:text-slate-700",
-              )}
+              className="flex-1 rounded-md py-2 text-sm font-medium transition-all"
+              style={{
+                backgroundColor: tab === t ? "#ffffff" : "transparent",
+                color: tab === t ? "#1a3d2b" : "#6b8f78",
+                boxShadow: tab === t ? "0 1px 4px rgba(26,61,43,0.08)" : "none",
+              }}
             >
-              {t === "login" ? "შესვლა" : "რეგისტრაცია"}
+              {t === "login" ? tr.loginTab : tr.registerTab}
             </button>
           ))}
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          {/* Input type toggle */}
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <div>
-            <div className="mb-2 flex items-center justify-between">
-              <label className="text-sm font-medium text-slate-700">
-                {inputType === "email" ? "ელ-ფოსტა" : "ტელეფონი"}
-              </label>
-              <button
-                type="button"
-                onClick={() => {
-                  setInputType(inputType === "email" ? "phone" : "email");
-                  setIdentifier("");
-                }}
-                className="text-xs font-medium text-indigo-500 hover:text-indigo-700"
-              >
-                {inputType === "email" ? "→ ტელეფონით შესვლა" : "→ მეილით შესვლა"}
-              </button>
-            </div>
+            <label style={{ display: "block", fontSize: 12, fontWeight: 600, color: "#1a3d2b", marginBottom: 6 }}>
+              {tr.emailLabel}
+            </label>
             <input
-              type={inputMode}
-              inputMode={inputMode}
+              type="text"
               value={identifier}
               onChange={(e) => setIdentifier(e.target.value)}
-              placeholder={inputPlaceholder}
+              placeholder="demo@arsi.ge"
               required
-              className="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm text-slate-900 outline-none transition-all placeholder:text-slate-400 focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100"
+              style={inputStyle()}
+              onFocus={(e) => (e.target.style.borderColor = "#2d6a4f")}
+              onBlur={(e) => (e.target.style.borderColor = "#c8ddd0")}
             />
           </div>
 
-          {/* Password */}
           <div>
-            <label className="mb-2 block text-sm font-medium text-slate-700">პაროლი</label>
+            <label style={{ display: "block", fontSize: 12, fontWeight: 600, color: "#1a3d2b", marginBottom: 6 }}>
+              {tr.passwordLabel}
+            </label>
             <input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="••••••"
               required
-              className="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm text-slate-900 outline-none transition-all placeholder:text-slate-400 focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100"
+              style={inputStyle()}
+              onFocus={(e) => (e.target.style.borderColor = "#2d6a4f")}
+              onBlur={(e) => (e.target.style.borderColor = "#c8ddd0")}
             />
           </div>
 
-          {/* Confirm password (register only) */}
           <AnimatePresence>
             {tab === "register" && (
               <motion.div
@@ -130,8 +181,8 @@ export function AuthForm({ onLogin, onRegister }: AuthFormProps) {
                 transition={{ duration: 0.2 }}
                 className="overflow-hidden"
               >
-                <label className="mb-2 block text-sm font-medium text-slate-700">
-                  გაიმეორეთ პაროლი
+                <label style={{ display: "block", fontSize: 12, fontWeight: 600, color: "#1a3d2b", marginBottom: 6 }}>
+                  {tr.confirmLabel}
                 </label>
                 <input
                   type="password"
@@ -139,20 +190,21 @@ export function AuthForm({ onLogin, onRegister }: AuthFormProps) {
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   placeholder="••••••"
                   required
-                  className="w-full rounded-xl border border-slate-200 px-4 py-3 text-sm text-slate-900 outline-none transition-all placeholder:text-slate-400 focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100"
+                  style={inputStyle()}
+                  onFocus={(e) => (e.target.style.borderColor = "#2d6a4f")}
+                  onBlur={(e) => (e.target.style.borderColor = "#c8ddd0")}
                 />
               </motion.div>
             )}
           </AnimatePresence>
 
-          {/* Error */}
           <AnimatePresence>
             {error && (
               <motion.p
                 initial={{ opacity: 0, y: -4 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0 }}
-                className="rounded-xl bg-red-50 px-4 py-3 text-sm text-red-600"
+                style={{ fontSize: 12, color: "#e05252", backgroundColor: "#fdecea", borderRadius: 8, padding: "10px 14px" }}
               >
                 {error}
               </motion.p>
@@ -162,22 +214,25 @@ export function AuthForm({ onLogin, onRegister }: AuthFormProps) {
           <button
             type="submit"
             disabled={submitting}
-            className="w-full rounded-xl py-3 text-sm font-semibold text-white transition-all duration-200 hover:opacity-90 disabled:opacity-60"
             style={{
-              background: "radial-gradient(80% 150% at 50% -20%, #818cf8 0%, #6366f1 100%)",
-              boxShadow: "rgba(99, 102, 241, 0.3) 0px 4px 16px 0px",
+              width: "100%",
+              padding: "13px",
+              backgroundColor: submitting ? "#6b8f78" : "#1a3d2b",
+              color: "#ffffff",
+              border: "none",
+              borderRadius: 8,
+              fontSize: 14,
+              fontWeight: 600,
+              cursor: submitting ? "not-allowed" : "pointer",
             }}
           >
-            {tab === "login" ? "შესვლა" : "რეგისტრაცია"}
+            {tab === "login" ? tr.loginBtn : tr.registerBtn}
           </button>
         </form>
 
-        {tab === "login" && (
-          <p className="mt-4 text-center text-xs text-slate-400">
-            Demo: <span className="font-medium text-slate-600">demo@arsi.ge</span> /{" "}
-            <span className="font-medium text-slate-600">demo123</span>
-          </p>
-        )}
+        <p style={{ textAlign: "center", fontSize: 11, color: "#9ab8a5", marginTop: 20 }}>
+          {tr.demoHint}
+        </p>
       </div>
     </div>
   );

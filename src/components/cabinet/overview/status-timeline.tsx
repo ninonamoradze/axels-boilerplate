@@ -2,31 +2,36 @@
 
 import { motion } from "framer-motion";
 import { staggerContainer, staggerItem, defaultViewport } from "@/lib/motion";
-import { cn } from "@/lib/utils";
 import { Check } from "lucide-react";
-
-const steps = [
-  { id: 1, label: "რეზერვაცია" },
-  { id: 2, label: "ხელშეკრულება" },
-  { id: 3, label: "მშენებლობა" },
-  { id: 4, label: "ჩაბარება" },
-];
+import { useLang, translations } from "@/lib/lang-context";
 
 interface StatusTimelineProps {
   currentStep: number;
 }
 
 export function StatusTimeline({ currentStep }: StatusTimelineProps) {
+  const { lang } = useLang();
+  const tr = translations[lang];
+
+  const steps = tr.steps.map((label, i) => ({ id: i + 1, label }));
+
   return (
     <motion.div
       variants={staggerContainer}
       initial="hidden"
       animate="visible"
       viewport={defaultViewport}
-      className="rounded-2xl border border-white/10 bg-white/5 p-6"
+      style={{
+        backgroundColor: "#ffffff",
+        borderRadius: 16,
+        padding: "24px 28px",
+        border: "1px solid #d4e8da",
+      }}
     >
-      <p className="mb-6 text-sm font-medium text-white/70">პროექტის პროგრესი</p>
-      <div className="flex items-center gap-0">
+      <p className="mb-6 text-sm font-semibold" style={{ color: "#1a3d2b" }}>
+        {tr.progressTitle}
+      </p>
+      <div className="flex items-center">
         {steps.map((step, index) => {
           const isDone = step.id < currentStep;
           const isActive = step.id === currentStep;
@@ -35,30 +40,26 @@ export function StatusTimeline({ currentStep }: StatusTimelineProps) {
             <motion.div key={step.id} variants={staggerItem} className="flex flex-1 items-center">
               <div className="flex flex-col items-center gap-2">
                 <div
-                  className={cn(
-                    "flex h-8 w-8 items-center justify-center rounded-full border-2 text-xs font-medium",
-                    isDone && "border-indigo-400 bg-indigo-500 text-white",
-                    isActive && "border-indigo-400 bg-transparent text-indigo-300",
-                    !isDone && !isActive && "border-white/20 bg-transparent text-white/30",
-                  )}
+                  className="flex h-8 w-8 items-center justify-center rounded-full text-xs font-semibold"
+                  style={{
+                    backgroundColor: isDone ? "#1a3d2b" : isActive ? "#e8f5ee" : "#f4f7f4",
+                    color: isDone ? "#ffffff" : isActive ? "#1a3d2b" : "#9ab8a5",
+                    border: isActive ? "2px solid #2d6a4f" : "2px solid transparent",
+                  }}
                 >
                   {isDone ? <Check size={14} /> : step.id}
                 </div>
                 <span
-                  className={cn(
-                    "text-center text-xs",
-                    isActive ? "text-white" : isDone ? "text-white/60" : "text-white/30",
-                  )}
+                  className="text-center text-xs font-medium"
+                  style={{ color: isActive ? "#1a3d2b" : isDone ? "#6b8f78" : "#9ab8a5" }}
                 >
                   {step.label}
                 </span>
               </div>
               {index < steps.length - 1 && (
                 <div
-                  className={cn(
-                    "mb-6 h-px flex-1",
-                    step.id < currentStep ? "bg-indigo-400/60" : "bg-white/10",
-                  )}
+                  className="mb-6 h-px flex-1"
+                  style={{ backgroundColor: step.id < currentStep ? "#2d6a4f" : "#d4e8da" }}
                 />
               )}
             </motion.div>

@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { staggerContainer, staggerItem, defaultViewport } from "@/lib/motion";
 import { PaymentRow } from "./payment-row";
+import { useLang, translations } from "@/lib/lang-context";
 
 interface Payment {
   id: number;
@@ -16,11 +17,24 @@ interface PaymentScheduleProps {
 }
 
 export function PaymentSchedule({ payments }: PaymentScheduleProps) {
+  const { lang } = useLang();
+  const tr = translations[lang];
+
   return (
-    <div className="rounded-2xl border border-white/10 bg-white/5 p-6">
-      <div className="mb-4 grid grid-cols-4 gap-4 px-4">
-        {["#", "თარიღი", "თანხა", "სტატუსი"].map((h) => (
-          <span key={h} className="text-xs text-white/40">
+    <div
+      style={{
+        backgroundColor: "#ffffff",
+        borderRadius: 16,
+        border: "1px solid #d4e8da",
+        overflow: "hidden",
+      }}
+    >
+      <div
+        className="grid grid-cols-4 gap-4 px-5 py-3"
+        style={{ backgroundColor: "#f4f7f4", borderBottom: "1px solid #d4e8da" }}
+      >
+        {[tr.col.num, tr.col.date, tr.col.amount, tr.col.status].map((h) => (
+          <span key={h} className="text-xs font-semibold uppercase tracking-wide" style={{ color: "#9ab8a5" }}>
             {h}
           </span>
         ))}
@@ -30,7 +44,8 @@ export function PaymentSchedule({ payments }: PaymentScheduleProps) {
         initial="hidden"
         animate="visible"
         viewport={defaultViewport}
-        className="flex flex-col gap-2"
+        className="flex flex-col divide-y"
+        style={{ borderColor: "#f4f7f4" }}
       >
         {payments.map((payment) => (
           <motion.div key={payment.id} variants={staggerItem}>

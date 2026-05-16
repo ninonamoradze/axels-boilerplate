@@ -79,16 +79,20 @@ export function Header() {
         <div className="mx-auto flex h-14 max-w-7xl items-center justify-between px-4">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2">
-            <Image src="/logo.svg" alt="Logo" width={24} height={24} />
-            <span
-              className="text-lg font-bold text-slate-900"
-              style={{
-                fontFamily: "var(--font-bitcount-single)",
-                fontSize: "18px",
-                fontWeight: 700,
-              }}
+            <div
+              className="flex h-8 w-8 items-center justify-center rounded-lg"
+              style={{ backgroundColor: "#1a3d2b" }}
             >
-              YourSaaS
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#a8d5b5" strokeWidth="2">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                <polyline points="9 22 9 12 15 12 15 22" />
+              </svg>
+            </div>
+            <span
+              className="text-lg font-bold"
+              style={{ color: "#1a3d2b", fontFamily: "var(--font-bitcount-single)" }}
+            >
+              არსი
             </span>
           </Link>
 
@@ -96,13 +100,15 @@ export function Header() {
           <div className="hidden items-center gap-2 sm:flex">
             <Link
               href="/"
-              className="rounded-lg px-3 py-2 text-sm font-medium text-slate-700 hover:text-slate-900"
+              className="rounded-lg px-3 py-2 text-sm font-medium transition-colors hover:text-[#1a3d2b]"
+              style={{ color: "#6b8f78" }}
             >
               მთავარი
             </Link>
             <Link
               href="/news"
-              className="rounded-lg px-3 py-2 text-sm font-medium text-slate-700 hover:text-slate-900"
+              className="rounded-lg px-3 py-2 text-sm font-medium transition-colors hover:text-[#1a3d2b]"
+              style={{ color: "#6b8f78" }}
             >
               სიახლეები
             </Link>
@@ -110,12 +116,10 @@ export function Header() {
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }}>
               <Link
                 href="/cabinet"
-                className="block rounded-lg px-4 py-2 text-sm font-medium text-white"
+                className="block rounded-lg px-4 py-2 text-sm font-semibold text-white"
                 style={{
-                  background:
-                    "radial-gradient(80% 150% at 50% -20%, #818cf8 0%, #6366f1 100%)",
-                  boxShadow:
-                    "rgba(99, 102, 241, 0.3) 0px 2px 10px 0px",
+                  backgroundColor: "#1a3d2b",
+                  boxShadow: "0 2px 8px rgba(26,61,43,0.25)",
                 }}
               >
                 პირადი კაბინეტი
@@ -169,21 +173,24 @@ export function Header() {
             >
               <Link
                 href="/"
-                className="block rounded-lg py-3 text-[15px] font-medium text-slate-900"
+                className="block rounded-lg py-3 text-[15px] font-medium"
+                style={{ color: "#1a3d2b" }}
                 onClick={() => setMenuOpen(false)}
               >
                 მთავარი
               </Link>
               <Link
                 href="/news"
-                className="block rounded-lg py-3 text-[15px] font-medium text-slate-900"
+                className="block rounded-lg py-3 text-[15px] font-medium"
+                style={{ color: "#1a3d2b" }}
                 onClick={() => setMenuOpen(false)}
               >
                 სიახლეები
               </Link>
               <Link
                 href="/cabinet"
-                className="block rounded-lg py-3 text-[15px] font-medium text-indigo-600"
+                className="block rounded-lg py-3 text-[15px] font-semibold"
+                style={{ color: "#2d6a4f" }}
                 onClick={() => setMenuOpen(false)}
               >
                 პირადი კაბინეტი

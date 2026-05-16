@@ -19,10 +19,10 @@
 
 .dark {
   --radius: 0.625rem;
-  --background: #6366f1;
+  --background: #1a3d2b;
   --foreground: oklch(0.985 0 0);
-  --border: oklch(1 0 0 / 10%);
-  --ring: oklch(0.556 0 0);
+  --border: rgba(255, 255, 255, 0.1);
+  --ring: #2d6a4f;
 }
 
 @layer base {

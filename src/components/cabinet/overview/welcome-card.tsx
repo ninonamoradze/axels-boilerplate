@@ -1,7 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { fadeUp, defaultViewport } from "@/lib/motion";
+import { fadeUp } from "@/lib/motion";
+import { useLang, translations } from "@/lib/lang-context";
 
 interface WelcomeCardProps {
   userName: string;
@@ -10,21 +11,37 @@ interface WelcomeCardProps {
 }
 
 export function WelcomeCard({ userName, apartmentStatus, apartmentNumber }: WelcomeCardProps) {
+  const { lang } = useLang();
+  const tr = translations[lang];
+
   return (
     <motion.div
       variants={fadeUp}
       initial="hidden"
       animate="visible"
-      viewport={defaultViewport}
-      className="rounded-2xl border border-white/10 bg-white/5 p-6"
+      style={{
+        backgroundColor: "#1a3d2b",
+        borderRadius: 16,
+        padding: "24px 28px",
+      }}
     >
-      <p className="text-sm text-white/50">გამარჯობა,</p>
-      <h2 className="mt-1 text-2xl font-medium text-white">{userName}</h2>
-      <div className="mt-4 flex items-center gap-3">
-        <span className="rounded-full bg-white/10 px-3 py-1 text-xs text-white/70">
-          ბინა №{apartmentNumber}
+      <p style={{ fontSize: 13, color: "#a8d5b5", marginBottom: 4 }}>{tr.greeting}</p>
+      <h2 style={{ fontSize: 22, fontWeight: 700, color: "#ffffff", marginBottom: 16 }}>
+        {userName} 👋
+      </h2>
+      <p style={{ fontSize: 13, color: "#a8d5b5", marginBottom: 16 }}>{tr.greetingSub}</p>
+      <div className="flex flex-wrap items-center gap-2">
+        <span
+          className="rounded-full px-3 py-1 text-xs font-medium"
+          style={{ backgroundColor: "#2d6a4f", color: "#a8d5b5" }}
+        >
+          {tr.apartment} №{apartmentNumber}
         </span>
-        <span className="rounded-full bg-indigo-500/20 px-3 py-1 text-xs text-indigo-300">
+        <span
+          className="flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium"
+          style={{ backgroundColor: "#e8f5ee", color: "#1a3d2b" }}
+        >
+          <span style={{ width: 6, height: 6, borderRadius: "50%", backgroundColor: "#2d6a4f", display: "inline-block" }} />
           {apartmentStatus}
         </span>
       </div>
