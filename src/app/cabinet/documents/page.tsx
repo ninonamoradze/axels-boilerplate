@@ -2,12 +2,6 @@ import { DocumentRow } from "@/components/cabinet/documents/document-row";
 
 const documents = [
   {
-    name: "ყიდვა-გაყიდვის ხელშეკრულება",
-    date: "05.01.2026",
-    type: "PDF",
-    downloadUrl: "/documents/nasydoba-kharchilavа.pdf",
-  },
-  {
     name: "პირველადი შეთანხმება",
     date: "01.02.2025",
     type: "PDF",
