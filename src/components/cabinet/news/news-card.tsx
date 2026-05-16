@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import { staggerItem } from "@/lib/motion";
 import { cn } from "@/lib/utils";
-import { Tag, Calendar } from "lucide-react";
+import { Tag, Calendar, Download } from "lucide-react";
 
 export type NewsCategory = "offer" | "news" | "event";
 
@@ -13,6 +13,8 @@ interface NewsCardProps {
   date: string;
   category: NewsCategory;
   isNew?: boolean;
+  downloadUrl?: string;
+  downloadLabel?: string;
 }
 
 const categoryConfig: Record<NewsCategory, { label: string; styles: string }> = {
@@ -30,7 +32,7 @@ const categoryConfig: Record<NewsCategory, { label: string; styles: string }> = 
   },
 };
 
-export function NewsCard({ title, description, date, category, isNew }: NewsCardProps) {
+export function NewsCard({ title, description, date, category, isNew, downloadUrl, downloadLabel }: NewsCardProps) {
   const { label, styles } = categoryConfig[category];
 
   return (
@@ -51,9 +53,21 @@ export function NewsCard({ title, description, date, category, isNew }: NewsCard
       </div>
       <h3 className="mt-3 text-sm font-medium text-white">{title}</h3>
       <p className="mt-1.5 text-sm leading-relaxed text-white/50">{description}</p>
-      <div className="mt-4 flex items-center gap-1.5 text-xs text-white/30">
-        <Calendar size={12} />
-        <span>{date}</span>
+      <div className="mt-4 flex items-center justify-between">
+        <div className="flex items-center gap-1.5 text-xs text-white/30">
+          <Calendar size={12} />
+          <span>{date}</span>
+        </div>
+        {downloadUrl && (
+          <a
+            href={downloadUrl}
+            download
+            className="flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs text-white/50 transition-colors hover:bg-white/5 hover:text-white"
+          >
+            <Download size={13} />
+            <span>{downloadLabel ?? "ჩამოტვირთვა"}</span>
+          </a>
+        )}
       </div>
     </motion.div>
   );

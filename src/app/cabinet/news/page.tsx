@@ -2,6 +2,17 @@ import { NewsFilter } from "@/components/cabinet/news/news-filter";
 
 const newsItems = [
   {
+    id: 0,
+    title: "სერვისის მომსახურების გზამკვლევი",
+    description:
+      "კომპლექსის მომსახურების სრული გზამკვლევი — გაეცანით ყველა სერვისს, პროცედურებს და საკონტაქტო ინფორმაციას.",
+    date: "16 მაისი, 2025",
+    category: "news" as const,
+    isNew: true,
+    downloadUrl: "/documents/service-guide.pdf",
+    downloadLabel: "გზამკვლევის ჩამოტვირთვა",
+  },
+  {
     id: 1,
     title: "საახალწლო ფასდაკლება — 5%",
     description:

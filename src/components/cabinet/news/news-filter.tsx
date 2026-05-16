@@ -22,6 +22,8 @@ interface NewsItem {
   date: string;
   category: NewsCategory;
   isNew?: boolean;
+  downloadUrl?: string;
+  downloadLabel?: string;
 }
 
 interface NewsFilterProps {
