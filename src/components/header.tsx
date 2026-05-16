@@ -94,44 +94,32 @@ export function Header() {
 
           {/* Nav Right - Desktop */}
           <div className="hidden items-center gap-2 sm:flex">
-            <a
-              href="#features"
-              onClick={(e) => scrollTo(e, "features")}
+            <Link
+              href="/"
               className="rounded-lg px-3 py-2 text-sm font-medium text-slate-700 hover:text-slate-900"
             >
-              Features
-            </a>
-            <a
-              href="#testimonials"
-              onClick={(e) => scrollTo(e, "testimonials")}
+              მთავარი
+            </Link>
+            <Link
+              href="/news"
               className="rounded-lg px-3 py-2 text-sm font-medium text-slate-700 hover:text-slate-900"
             >
-              Testimonials
-            </a>
-            <a
-              href="mailto:hello@yourdomain.com"
-              className="rounded-lg px-3 py-2 text-sm font-medium text-slate-700 hover:text-slate-900"
-            >
-              Contact
-            </a>
+              სიახლეები
+            </Link>
 
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }}>
-              <a
-                href="#pricing"
-                onClick={(e) => scrollTo(e, "pricing")}
-                className="block rounded-lg px-4 py-2 text-sm font-medium"
+              <Link
+                href="/cabinet"
+                className="block rounded-lg px-4 py-2 text-sm font-medium text-white"
                 style={{
-                  color: "rgb(17, 17, 17)",
                   background:
-                    "radial-gradient(39.8% 100% at 50% 0%, rgb(255, 255, 255) 0%, rgb(249, 249, 250) 100%)",
-                  borderRadius: "8px",
-                  border: "0.5px solid rgba(34, 34, 34, 0.15)",
+                    "radial-gradient(80% 150% at 50% -20%, #818cf8 0%, #6366f1 100%)",
                   boxShadow:
-                    "rgba(0, 0, 0, 0.12) 0px 1px 2px 0px, rgba(0, 0, 0, 0.08) 0px 4px 6px 0px, rgba(255, 255, 255, 0.25) 0px 1px 1px 0px inset",
+                    "rgba(99, 102, 241, 0.3) 0px 2px 10px 0px",
                 }}
               >
-                Get Started — $XX
-              </a>
+                პირადი კაბინეტი
+              </Link>
             </motion.div>
           </div>
 
@@ -179,27 +167,27 @@ export function Header() {
               exit={{ height: 0, opacity: 0 }}
               transition={{ duration: 0.2 }}
             >
-              <a
-                href="#features"
-                className="block rounded-lg py-3 text-[15px] font-medium text-slate-900"
-                onClick={(e) => scrollTo(e, "features")}
-              >
-                Features
-              </a>
-              <a
-                href="#testimonials"
-                className="block rounded-lg py-3 text-[15px] font-medium text-slate-900"
-                onClick={(e) => scrollTo(e, "testimonials")}
-              >
-                Testimonials
-              </a>
-              <a
-                href="mailto:hello@yourdomain.com"
+              <Link
+                href="/"
                 className="block rounded-lg py-3 text-[15px] font-medium text-slate-900"
                 onClick={() => setMenuOpen(false)}
               >
-                Contact
-              </a>
+                მთავარი
+              </Link>
+              <Link
+                href="/news"
+                className="block rounded-lg py-3 text-[15px] font-medium text-slate-900"
+                onClick={() => setMenuOpen(false)}
+              >
+                სიახლეები
+              </Link>
+              <Link
+                href="/cabinet"
+                className="block rounded-lg py-3 text-[15px] font-medium text-indigo-600"
+                onClick={() => setMenuOpen(false)}
+              >
+                პირადი კაბინეტი
+              </Link>
             </motion.div>
           )}
         </AnimatePresence>
